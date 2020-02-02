@@ -144,26 +144,45 @@
         // https://stackoverflow.com/questions/48068955/how-to-get-the-index-of-an-element-in-a-nodelist-html-collection-on-click/50070377 
         for(let i=0; i<$dots.length; i++) {
             $dots[i].addEventListener('click', function() {
+                limpaInterval();
                 verificaImg(i); // O índice do elemento div.dot que foi clicado é passado por parâmetro como se fosse o count
                 count = i; // count passa a valer o índice do div.dot que foi clicado
                 $img.setAttribute('src', imgs[count]); // a imagem é trocada de acordo com o índice da div.dot que foi clicada
+                initInterval();
             });
         }
 
+        var intervalo = null;
+
+        function initInterval() {
+            intervalo = setInterval(next, 4000);
+        }
+        function limpaInterval() {
+            clearInterval(intervalo);
+        }
+        
+        initInterval();
+
         // Volta a imagem em 1, count recebe -1
         function prev() {
+            limpaInterval();
             count <= 0 ? count = imgs.length-1 : count--;
             $img.setAttribute('src', imgs[count]);
             verificaImg(count);
+            initInterval();
             // console.log($img.getAttribute('src'));
         }
         // Avança a imagem em 1, count recebe +1
         function next() {
+            limpaInterval();
             count >= imgs.length-1 ? count = 0 : count++;
             $img.setAttribute('src', imgs[count]);
             verificaImg(count);
+            initInterval();
             // console.log($img.getAttribute('src'));
         }
+
+        
 
 
     })();
